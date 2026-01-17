@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SecurePass Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.icons8.com/color/96/000000/password.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/color/96/000000/password.png">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-lock"></i>
+                    <h1>Luizrdsx SecurePass</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="infoBtn" aria-label="Informações">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <button class="icon-btn" id="settingsBtn" aria-label="Configurações">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <!-- Password Display -->
+            <div class="password-display-container">
+                <div class="password-display" id="passwordDisplay">
+                    <span id="passwordText">Clique em Gerar Senha</span>
+                </div>
+                <div class="password-actions">
+                    <button class="action-btn" id="copyBtn" aria-label="Copiar senha">
+                        <i class="fas fa-copy"></i>
+                        <span>Copiar</span>
+                    </button>
+                    <button class="action-btn" id="refreshBtn" aria-label="Gerar nova senha">
+                        <i class="fas fa-redo-alt"></i>
+                        <span>Gerar</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Indicador de senha forte -->
+            <div class="strength-indicator">
+                <div class="strength-header">
+                    <h3>Força da Senha</h3>
+                    <span id="strengthText">Média</span>
+                </div>
+                <div class="strength-bar">
+                    <div class="strength-fill" id="strengthFill"></div>
+                </div>
+                <div class="strength-labels">
+                    <span>Fraca</span>
+                    <span>Média</span>
+                    <span>Forte</span>
+                    <span>Muito Forte</span>
+                </div>
+            </div>
+
+            <!-- Opções de senha -->
+            <div class="options-container">
+                <h2><i class="fas fa-sliders-h"></i> Configurações da Senha</h2>
+                
+                <div class="option">
+                    <div class="option-label">
+                        <label for="lengthSlider">Comprimento: <span id="lengthValue">12</span> caracteres</label>
+                    </div>
+                    <input type="range" id="lengthSlider" min="6" max="30" value="12" class="slider">
+                </div>
+
+                <div class="option-checkbox">
+                    <input type="checkbox" id="uppercaseCheckbox" checked>
+                    <label for="uppercaseCheckbox">
+                        <i class="fas fa-text-height"></i>
+                        <span>Letras maiúsculas (A-Z)</span>
+                    </label>
+                </div>
+
+                <div class="option-checkbox">
+                    <input type="checkbox" id="lowercaseCheckbox" checked>
+                    <label for="lowercaseCheckbox">
+                        <i class="fas fa-font"></i>
+                        <span>Letras minúsculas (a-z)</span>
+                    </label>
+                </div>
+
+                <div class="option-checkbox">
+                    <input type="checkbox" id="numbersCheckbox" checked>
+                    <label for="numbersCheckbox">
+                        <i class="fas fa-hashtag"></i>
+                        <span>Números (0-9)</span>
+                    </label>
+                </div>
+
+                <div class="option-checkbox">
+                    <input type="checkbox" id="symbolsCheckbox" checked>
+                    <label for="symbolsCheckbox">
+                        <i class="fas fa-asterisk"></i>
+                        <span>Símbolos (!@#$%&*)</span>
+                    </label>
+                </div>
+
+                <div class="option-checkbox">
+                    <input type="checkbox" id="excludeSimilarCheckbox">
+                    <label for="excludeSimilarCheckbox">
+                        <i class="fas fa-ban"></i>
+                        <span>Excluir (i, l, 1, 0, O)</span>
+                    </label>
+                </div>
+
+                <div class="option-checkbox">
+                    <input type="checkbox" id="excludeAmbiguousCheckbox">
+                    <label for="excludeAmbiguousCheckbox">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Excluir ({ } [ ] ( )</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="primary-btn" id="generateBtn">
+                    <i class="fas fa-key"></i>
+                    Gerar Senha Segura
+                </button>
+                <button class="secondary-btn" id="saveBtn">
+                    <i class="fas fa-save"></i>
+                    Salvar Senha
+                </button>
+            </div>
+
+            <!-- Senha salvas -->
+            <div class="saved-passwords-container">
+                <div class="saved-header">
+                    <h2><i class="fas fa-bookmark"></i> Senhas Salvas</h2>
+                    <button class="icon-btn" id="clearSavedBtn">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                <div class="saved-list" id="savedList">
+                    <div class="empty-state">
+                        <i class="fas fa-key"></i>
+                        <p>Nenhuma senha salva ainda</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Luizrdsx SecurePass Generator v1.0 • Segurança digital em suas mãos</p>
+        </footer>
+
+        <div class="modal" id="infoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-info-circle"></i> Sobre o SecurePass</h2>
+                    <button class="close-btn" id="closeInfoModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>O <strong>Luizrdsx SecurePass</strong> é um gerador de senhas seguras desenvolvido para criar senhas fortes e únicas para proteger suas contas online.</p>
+                    <h3><i class="fas fa-shield-alt"></i> Dicas de segurança:</h3>
+                    <ul>
+                        <li>Use senhas com pelo menos 12 caracteres</li>
+                        <li>Combine letras maiúsculas, minúsculas, números e símbolos</li>
+                        <li>Não reutilize senhas em diferentes serviços</li>
+                        <li>Considere usar um gerenciador de senhas</li>
+                        <li>Ative a autenticação de dois fatores quando disponível</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="settingsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-cog"></i> Configurações</h2>
+                    <button class="close-btn" id="closeSettingsModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="option-checkbox">
+                        <input type="checkbox" id="autoCopyCheckbox">
+                        <label for="autoCopyCheckbox">
+                            <i class="fas fa-clipboard"></i>
+                            <span>Copiar automaticamente ao gerar</span>
+                        </label>
+                    </div>
+                    <div class="option-checkbox">
+                        <input type="checkbox" id="darkModeCheckbox" checked>
+                        <label for="darkModeCheckbox">
+                            <i class="fas fa-moon"></i>
+                            <span>Modo escuro</span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <div class="option-label">
+                            <label for="defaultLengthSlider">Comprimento padrão: <span id="defaultLengthValue">12</span> caracteres</label>
+                        </div>
+                        <input type="range" id="defaultLengthSlider" min="8" max="30" value="12" class="slider">
+                    </div>
+                    <div class="modal-actions">
+                        <button class="secondary-btn" id="resetSettingsBtn">Redefinir Configurações</button>
+                        <button class="primary-btn" id="saveSettingsBtn">Salvar Configurações</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notificação -->
+        <div class="toast" id="toast">
+            <span id="toastMessage">Senha copiada para a área de transferência!</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
